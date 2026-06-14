@@ -2,6 +2,15 @@
 
 A KenKen plugin for [KOReader](https://github.com/koreader/koreader).
 
+
+## Screenshot
+
+*(Screenshot to be added.)*
+
+## Rules
+
+Fill the N×N grid with 1–N (no repeats in rows or columns). Cells are grouped into cages labelled with a target and an arithmetic operation (+, −, ×, ÷). The numbers in each cage must produce the target using that operation.
+
 ## Concept
 
 KenKen combines Sudoku-style uniqueness constraints with arithmetic.
@@ -9,7 +18,7 @@ Fill the grid with digits 1–N (N = grid size) so that each digit appears
 exactly once in every row and column. Within each outlined "cage", the digits
 must produce the given target value using the indicated operation (+, −, ×, ÷).
 
-## Planned Features
+## Features
 
 - **Multiple grid sizes** — 3×3, 4×4, 5×5, 6×6, 8×8
 - **Three difficulty levels** — Easy (only + and ×), Medium, Hard (all operations)
@@ -34,6 +43,7 @@ must produce the given target value using the indicated operation (+, −, ×, �
 | New game | Tap **New game** |
 | Change grid size | Tap **Grid** |
 | Change difficulty | Tap **Diff** |
+| Show rules | Tap **Rules** |
 
 ## Why e-ink friendly?
 
