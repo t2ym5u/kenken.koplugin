@@ -179,7 +179,7 @@ local function assignOps(cages, sol, difficulty)
             elseif op == SYM_MUL then
                 cage.target = a * b
             else   -- ÷
-                cage.target = big // small
+                cage.target = math.floor(big / small)
             end
 
         else
