@@ -40,8 +40,11 @@ function KenKenBoardWidget:init()
     -- Small font for the cage label drawn in each cage's top-left cell corner
     local cell = self.size / n
     local label_sz = math.max(7, math.floor(cell * 0.28))
-    self.cage_label_face = Font:getFace("smallinfofont", label_sz)
-
+    self.cage_label_face    = Font:getFace("smallinfofont", label_sz)
+    self.cage_label_padding = math.max(1, math.floor(cell * 0.05))
+    -- Vertical space reserved at the top of non-given cells so the digit
+    -- never collides with a cage label drawn in that same corner.
+    self.cage_label_reserve = self.cage_label_padding + self.cage_label_face.size
 end
 
 function KenKenBoardWidget:onCellTap(row, col)
@@ -137,13 +140,23 @@ function KenKenBoardWidget:paintTo(bb, x, y)
             local v  = board:getDisplayValue(r, c)
 
             if v ~= 0 then
-                local text  = tostring(v)
-                local color = board:isShowingSolution() and not board:isGiven(r,c)
+                local text     = tostring(v)
+                local is_given = board:isGiven(r, c)
+                local color = board:isShowingSolution() and not is_given
                     and C_REVEAL_FG
-                    or  (board:isGiven(r,c) and C_GIVEN_FG or C_USER_FG)
+                    or  (is_given and C_GIVEN_FG or C_USER_FG)
                 local m    = RenderText:sizeUtf8Text(0, cinn, self.number_face, text, true, false)
-                local base = cy + pad + math.floor((cinn + m.y_top - m.y_bottom) / 2)
-                local tx   = cx + pad + math.floor((cinn - m.x) / 2)
+                local base
+                if is_given then
+                    -- Given cells never carry a cage label (single-cell cages
+                    -- aren't labelled), so the digit can use the full cell.
+                    base = cy + pad + math.floor((cinn + m.y_top - m.y_bottom) / 2)
+                else
+                    local reserve = self.cage_label_reserve
+                    local avail_h = math.max(1, math.floor(cell - reserve - pad))
+                    base = cy + reserve + math.floor((avail_h + m.y_top - m.y_bottom) / 2)
+                end
+                local tx = cx + pad + math.floor((cinn - m.x) / 2)
                 RenderText:renderUtf8Text(bb, tx, base, self.number_face, text, true, false, color)
             else
                 -- Notes
@@ -173,19 +186,23 @@ function KenKenBoardWidget:paintTo(bb, x, y)
     end
 
     -- -----------------------------------------------------------------------
-    -- Cage labels — drawn last so they sit on top of everything
+    -- Cage labels — drawn last so they sit on top of everything.
+    -- Single-cell cages show their value in full via the digit itself, so
+    -- they get no separate (redundant) label.
     -- -----------------------------------------------------------------------
-    local lpad = math.max(1, math.floor(cell * 0.05))
+    local lpad = self.cage_label_padding
 
     for _, cage in ipairs(board.cages) do
-        local lr, lc   = cage.label_cell[1], cage.label_cell[2]
-        local label    = board:getCageLabel(cage)
-        local lx       = x + math.floor((lc-1) * cell) + lpad + thick
-        local ly       = y + math.floor((lr-1) * cell) + lpad + thick
-        local lm       = RenderText:sizeUtf8Text(0, math.floor(cell * 0.9),
-                            self.cage_label_face, label, true, false)
-        local lbase    = ly + (lm.y_bottom - lm.y_top)
-        RenderText:renderUtf8Text(bb, lx, lbase, self.cage_label_face, label, true, false, C_LABEL)
+        if #cage.cells > 1 then
+            local lr, lc   = cage.label_cell[1], cage.label_cell[2]
+            local label    = board:getCageLabel(cage)
+            local lx       = x + math.floor((lc-1) * cell) + lpad + thick
+            local ly       = y + math.floor((lr-1) * cell) + lpad + thick
+            local lm       = RenderText:sizeUtf8Text(0, math.floor(cell * 0.9),
+                                self.cage_label_face, label, true, false)
+            local lbase    = ly + (lm.y_bottom - lm.y_top)
+            RenderText:renderUtf8Text(bb, lx, lbase, self.cage_label_face, label, true, false, C_LABEL)
+        end
     end
 end
 
