@@ -26,6 +26,7 @@ must produce the given target value using the indicated operation (+, −, ×, �
 - **Note mode** — pencil in candidate digits
 - **Cage highlighting** — tap a cage to highlight all its cells simultaneously
 - **Check** — highlights cells violating row, column or cage constraints
+- **Hint** — two taps: the first says which cell is about to give, the second acts on it. A cell that contradicts the solution is always reported before a fresh one is revealed
 - **Reveal solution** — shows the full solution
 - **Undo** — step back through your moves
 - **Auto-save** — game state saved and restored on next launch
