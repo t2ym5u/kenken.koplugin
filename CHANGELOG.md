@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-10-30
+
+### Added
+- "New game" once the puzzle is solved: the action bar shows it in place of
+  the game's buttons, so the next puzzle no longer needs the menu. Showing
+  the solution does not end the round, since it can be hidden again.
+- The rules now explain how to play: tap a cell, then a digit.
+
+### Changed
+- Redesigned play screen, in line with the other games: a full-width action
+  bar (on two rows in landscape, where five buttons don't fit one), the
+  unified number pad, a larger board that fills the available room, and one
+  frame around it. The status line reads "size · difficulty · Empty: n ·
+  Cage: …" and wraps in landscape instead of being cut off.
+- Title-bar menu in the same order as every other game, with the current
+  values shown: "Size: …" (was "Grid: …"), "Difficulty: …" (was "Diff:
+  …"), and "Show solution" / "Hide solution" (was "Show result" / "Hide
+  result").
+- New README screenshot.
+
+### Fixed
+- Tapping Undo crashed the game ("attempt to call method 'undo'").
+- Using Hint wiped the saved game: the board was saved as nothing. And when
+  a hint fills the last cell, the status now shows the win message.
+- Digits overflowed their cells and cage labels came out nearly twice too
+  big on high-DPI screens. Labels are now sized to the cell, and a digit in
+  a cage's labelled cell gets a smaller face that fits under the label
+  instead of colliding with it; notes in that cell start below the label
+  too.
+
 ## [1.2.2] - 2026-10-07
 
 ### Fixed
