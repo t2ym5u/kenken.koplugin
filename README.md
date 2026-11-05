@@ -21,11 +21,11 @@ must produce the given target value using the indicated operation (+, −, ×, �
 ## Features
 
 - **Multiple grid sizes** — 3×3, 4×4, 5×5, 6×6, 8×8
-- **Three difficulty levels** — Easy (only + and ×), Medium, Hard (all operations)
-- **Operation-free mode** — only the target is shown, no operation hint
+- **Three difficulty levels** — Easy (cages of up to 2 cells, more givens), Medium (up to 3 cells), Hard (up to 4 cells, few givens, needs pairs and cage-in-a-line deductions)
+- **Always fair** — every puzzle has exactly one solution and is checked to be solvable by logic alone, no guessing
 - **Note mode** — pencil in candidate digits
 - **Cage highlighting** — tap a cage to highlight all its cells simultaneously
-- **Check** — highlights cells violating row, column or cage constraints
+- **Check** — highlights the cells that are wrong
 - **Hint** — two taps: the first says which cell is about to give, the second acts on it. A cell that contradicts the solution is always reported before a fresh one is revealed
 - **Reveal solution** — shows the full solution
 - **Undo** — step back through your moves
