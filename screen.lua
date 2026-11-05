@@ -19,6 +19,7 @@ local T               = require("ffi/util").template
 
 local ScreenBase         = require("screen_base")
 local MenuHelper         = require("menu_helper")
+local GenProgress        = require("gen_progress")
 local KenKenBoard        = lrequire("board")
 local KenKenBoardWidget  = lrequire("board_widget")
 
@@ -65,9 +66,10 @@ local KenKenScreen = ScreenBase:extend{}
 function KenKenScreen:init()
     local state = self.plugin:loadState()
     local n     = self.plugin:getSetting("grid_n", 6)
-    self.board  = KenKenBoard:new{ n = n }
+    self.board  = KenKenBoard:new{ n = n, empty = true }
     if not self.board:load(state) then
-        self.board:generate(self.plugin:getSetting("difficulty", "medium"))
+        local diff = self.plugin:getSetting("difficulty", "medium")
+        GenProgress.run(function(on_progress) self.board:generate(diff, on_progress) end)
     end
     self.selected  = nil
     self.note_mode = false
@@ -223,8 +225,8 @@ end
 function KenKenScreen:onNewGame()
     local diff = self.plugin:getSetting("difficulty", "medium")
     local n    = self.plugin:getSetting("grid_n", 6)
-    self.board = KenKenBoard:new{ n=n }
-    self.board:generate(diff)
+    self.board = KenKenBoard:new{ n = n, empty = true }
+    GenProgress.run(function(on_progress) self.board:generate(diff, on_progress) end)
     self.selected  = nil
     self.note_mode = false
     self.plugin:saveState(self.board:serialize())

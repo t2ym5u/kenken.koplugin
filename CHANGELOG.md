@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2026-11-05
+
+### Fixed
+- Every puzzle now has exactly one solution. Before, many grids (about half
+  of the Hard ones) also allowed another answer, which the game then
+  refused. Each new puzzle is now checked by a logic solver that never
+  guesses, so it can always be solved by reasoning alone.
+- A grid that keeps every rule (rows, columns and all cages) now counts as
+  solved even if it differs from the stored answer, so a game saved with an
+  older version can still be finished with its other answer.
+
+### Changed
+- The difficulty levels are now measured, not just set by cage size:
+  Easy and Medium are solved with simple deductions only (one place left,
+  cage combinations), Medium with bigger cages and fewer givens; Hard has
+  the fewest givens and usually needs pairs or "this cage puts that digit
+  in this row" deductions.
+- More varied grids: the digits behind a puzzle are no longer always a
+  shifted pattern.
+- A progress bar appears if building a puzzle takes a moment.
+- Today's Daily Challenge grid changes once, as puzzles are now built
+  differently.
+
 ## [1.4.5] - 2026-11-04
 
 ### Fixed
