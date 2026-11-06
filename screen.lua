@@ -367,7 +367,8 @@ function KenKenScreen:getShowButtonText()
 end
 
 function KenKenScreen:getNoteButtonText()
-    return self.note_mode and _("Note: ON") or _("Note: OFF")
+    -- Same strings as the sudoku family ("Notes : actif / inactif").
+    return self.note_mode and _("Note: On") or _("Note: Off")
 end
 
 function KenKenScreen:_updateUndoButton()

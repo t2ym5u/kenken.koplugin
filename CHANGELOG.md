@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1] - 2026-11-05
+
+### Fixed
+- The notes button now reads "Notes : actif / inactif" in French, like the
+  sudoku games, instead of "Notes : ON / OFF".
+
 ## [1.5.0] - 2026-11-05
 
 ### Fixed
